@@ -1,0 +1,22 @@
+﻿// See https://aka.ms/new-console-template for more information
+
+using EasyLinkSDKCSharp;
+
+using ChessnutAirAPI api = new ChessnutAirAPI();
+api.Connect();
+
+var batteryLevel = api.GetBattery();
+var fileCount = api.GetFileCount();
+var version = api.GetVersion();
+var mcuVersion = api.GetMcuVersion();
+var bleVersion = api.GetBleVersion();
+
+api.RealTimeConsole();
+
+Console.WriteLine("Press enter to exit...");
+Console.ReadLine();
+Console.WriteLine($"Battery: {batteryLevel}");
+Console.WriteLine($"Version: {version}");
+Console.WriteLine($"File Count: {fileCount}");
+Console.WriteLine($"MCU Version: {mcuVersion}");
+Console.WriteLine($"BLE Version: {bleVersion}");
