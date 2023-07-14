@@ -34,27 +34,18 @@ public class ChessnutAirAPI : IDisposable
     public ChessnutAirAPI()
     {
         Assembly a = Assembly.GetExecutingAssembly();
-        var currentDir = Path.GetDirectoryName(a.Location);
-        var easyLinkPath = "easylink.dll";
-        var exportPath = Path.Combine(currentDir, easyLinkPath);
+        var exportPath = Path.Combine(Path.GetDirectoryName(a.Location) ?? "", "easylink.dll");
 
         if (File.Exists(exportPath))
             return;
             
-        var resFilestream = a.GetManifestResourceStream("EasyLinkSDKCSharp.Dependencies.easylink.dll");
+        using var resFilestream = a.GetManifestResourceStream("EasyLinkSDKCSharp.Dependencies.easylink.dll");
 
-        if (resFilestream != null)
-        {
-            BinaryReader br = new BinaryReader(resFilestream);
-            FileStream fs = new FileStream(exportPath, FileMode.Create); // Say
-            BinaryWriter bw = new BinaryWriter(fs);
-            byte[] ba = new byte[resFilestream.Length];
-            resFilestream.Read(ba, 0, ba.Length);
-            bw.Write(ba);
-            br.Close();
-            bw.Close();
-            resFilestream.Close();
-        }
+        if (resFilestream == null) return;
+        
+        using FileStream fs = new FileStream(exportPath, FileMode.CreateNew);
+        for (int i = 0; i < resFilestream.Length; i++)
+            fs.WriteByte((byte)resFilestream.ReadByte());
     }
 
     /// <summary>
