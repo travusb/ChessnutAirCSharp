@@ -25,7 +25,7 @@ public class ChessnutAirAPI : IDisposable
     [DllImport( "easylink.dll" )]
     private static extern int cl_get_file_count();
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    private delegate void cl_realtimeCallback(string fen, int length);
+    public delegate void cl_realtimeCallback(string fen, int length);
     [DllImport( "easylink.dll")]
     private static extern void cl_set_readtime_callback([MarshalAs(UnmanagedType.FunctionPtr)] cl_realtimeCallback callback);
     [DllImport( "easylink.dll" )]
@@ -109,15 +109,14 @@ public class ChessnutAirAPI : IDisposable
         return cl_get_battery();
     }
 
-    public void RealTimeConsole()
+    public void SetRealtimeCallback(cl_realtimeCallback callback)
     {
-        cl_set_readtime_callback(Callback);
-        cl_switch_real_time_mode();
+        cl_set_readtime_callback(callback);
     }
-    
-    private void Callback(string fen, int length)
+
+    public void SetRealtimeMode()
     {
-        Console.WriteLine(fen);
+        cl_switch_real_time_mode();
     }
 
     public void Dispose()
