@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using EasyLinkSDKCSharp;
+﻿using EasyLinkSDKCSharp;
 
 using ChessnutAirAPI api = new ChessnutAirAPI();
 api.Connect();
