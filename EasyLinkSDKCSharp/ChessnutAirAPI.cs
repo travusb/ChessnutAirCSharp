@@ -31,6 +31,8 @@ public class ChessnutAirAPI : IDisposable
     [DllImport( "easylink.dll" )]
     private static extern bool cl_switch_real_time_mode();
 
+    private cl_realtimeCallback _callbackMethod;
+    
     public ChessnutAirAPI()
     {
         Assembly a = Assembly.GetExecutingAssembly();
@@ -148,7 +150,8 @@ public class ChessnutAirAPI : IDisposable
     /// <param name="callback">Method used by the realtime mode</param>
     public void SetRealtimeCallback(cl_realtimeCallback callback)
     {
-        cl_set_readtime_callback(callback);
+        _callbackMethod = callback;
+        cl_set_readtime_callback(_callbackMethod);
     }
 
     /// <summary>

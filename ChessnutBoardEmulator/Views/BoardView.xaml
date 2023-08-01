@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="ChessnutBoardEmulator.Views.BoardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ChessnutBoardEmulator.ViewModels"
+             xmlns:converters="clr-namespace:ChessnutBoardEmulator.Converters"
+             xmlns:views="clr-namespace:ChessnutBoardEmulator.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="1000" Background="DimGray" d:DataContext="{d:DesignInstance viewModels:BoardViewModel}">
+    <UserControl.Resources>
+        <converters:RankToGridConverter x:Key="RankToGridConverter"/>
+        <converters:FileToGridConverter x:Key="FileToGridConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="25"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <views:ScoreView IsLightScore="False" DataContext="{Binding ScoreViewModel}"/>
+            
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Squares}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Canvas >
+                            <Canvas.Style>
+                                <Style TargetType="Canvas">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsLightSquare}" Value="True">
+                                            <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsLightSquare}" Value="False">
+                                            <Setter Property="Background" Value="DarkGreen"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Canvas.Style>
+                            <Image Source="{Binding CurrentChessPiece.ImagePath}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image.RenderTransform>
+                                    <ScaleTransform ScaleX=".65" ScaleY=".65"/>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Grid.Row">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource RankToGridConverter}">
+                                    <Binding Path="Rank"/>
+                                    <Binding Path="IsReverseOrder"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Setter Property="Grid.Column">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource FileToGridConverter}">
+                                    <Binding Path="File"/>
+                                    <Binding Path="IsReverseOrder"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+            
+            <views:ScoreView Grid.Row="2" IsLightScore="True" DataContext="{Binding ScoreViewModel}" VerticalAlignment="Top"/>
+            
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <!--<Button Grid.Column="0" Content="Setup Board" Command="{Binding SetupBoardCommand}"/>
+                <Button Grid.Column="1" Content="Clear Board" Command="{Binding ClearBoardCommand}"/>-->
+                <CheckBox Grid.Column="0" Content="Reverse Board" IsChecked="{Binding IsBoardReversed}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="ChessnutBoardEmulator.Views.ScoreView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ChessnutBoardEmulator.Views"
+             xmlns:con="clr-namespace:ChessnutBoardEmulator.Converters"
+             xmlns:viewModels="clr-namespace:ChessnutBoardEmulator.ViewModels"
+             mc:Ignorable="d" x:Name="ScoreControl" d:DataContext="{d:DesignInstance viewModels:ScoreViewModel}">
+    
+    <UserControl.Resources>
+        <con:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed"/>
+        <con:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" True="Collapsed" False="Visible"/>
+        <con:ScoreToStringConverter x:Key="ScoreToStringConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=ScoreControl, Path=IsLightScore, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ItemsControl ItemsSource="{Binding WhiteCaptures}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding ImagePath}" Width="25" Height="25"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text="{Binding WhiteScore, Converter={StaticResource ScoreToStringConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=ScoreControl, Path=IsLightScore, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+            <ItemsControl ItemsSource="{Binding BlackCaptures}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding ImagePath}" Width="25" Height="25"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text="{Binding BlackScore, Converter={StaticResource ScoreToStringConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

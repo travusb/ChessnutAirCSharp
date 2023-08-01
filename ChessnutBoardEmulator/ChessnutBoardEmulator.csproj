@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Images\bb.png" />
+      <Resource Include="Images\bb.png" />
+      <None Remove="Images\bk.png" />
+      <Resource Include="Images\bk.png" />
+      <None Remove="Images\bn.png" />
+      <Resource Include="Images\bn.png" />
+      <None Remove="Images\bp.png" />
+      <Resource Include="Images\bp.png" />
+      <None Remove="Images\bq.png" />
+      <Resource Include="Images\bq.png" />
+      <None Remove="Images\br.png" />
+      <Resource Include="Images\br.png" />
+      <None Remove="Images\wb.png" />
+      <Resource Include="Images\wb.png" />
+      <None Remove="Images\wk.png" />
+      <Resource Include="Images\wk.png" />
+      <None Remove="Images\wn.png" />
+      <Resource Include="Images\wn.png" />
+      <None Remove="Images\wp.png" />
+      <Resource Include="Images\wp.png" />
+      <None Remove="Images\wq.png" />
+      <Resource Include="Images\wq.png" />
+      <None Remove="Images\wr.png" />
+      <Resource Include="Images\wr.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasyLinkSDKCSharp\EasyLinkSDKCSharp.csproj" />
+    </ItemGroup>
+
+</Project>
