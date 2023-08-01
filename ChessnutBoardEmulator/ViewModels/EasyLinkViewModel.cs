@@ -97,7 +97,6 @@ public class EasyLinkViewModel : BaseViewModel
     public void StartMonitoring()
     {
         Monitor();
-        //new Thread(Monitor).Start();
     }
 
     private void Monitor()

@@ -6,20 +6,6 @@ namespace ChessnutBoardEmulator.Converters;
 
 public class FileToGridConverter : IMultiValueConverter
 {
-    /*public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is int file)
-        {
-            return Math.Abs(file - 1);
-        }
-
-        return null;
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }*/
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Length < 2)
